@@ -1,6 +1,7 @@
-//console.log("Processo Principal")
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron')
 
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron')
+// relacionado ao preload.js
+const path = require('node:path')
 
 // Janela principal
 const createWindow = () => {
@@ -11,7 +12,11 @@ const createWindow = () => {
         resizable: false, //evitar o redimensionamento
         //titleBarStyle: 'hidden', //esconder barra de título e menu
         //autoHideMenuBar: true, //esconder o menu
-        icon: './src/public/img/pc.png'
+        icon: './src/public/img/pc.png',
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js')
+        }
+
     })
 
     // Iniciar a janela com o menu personalizado
@@ -22,18 +27,27 @@ const createWindow = () => {
 
 // Janela Sobre
 
-const aboutWindow = () => {
-    // nativeTheme.themeSource = 'dark'
-    const about = new BrowserWindow({
-        width: 360, //largura
-        height: 200, //altura
-        resizable: false, //evitar o redimensionamento
-        //titleBarStyle: 'hidden', //esconder barra de título e menu
-        autoHideMenuBar: true, //esconder o menu
-        icon: './src/public/img/pc.png'
-    })
+let about //Resolver bug de abertura de várias janelas
 
+const aboutWindow = () => {
+    // Se a janela about n estiver aberta (bug 1) abrir
+    if (!about) {
+        about = new BrowserWindow({
+            width: 360, //largura
+            height: 200, //altura
+            resizable: false, //evitar o redimensionamento
+            //titleBarStyle: 'hidden', //esconder barra de título e menu
+            autoHideMenuBar: true, //esconder o menu
+            icon: './src/public/img/pc.png'
+        })
+    }
+    // nativeTheme.themeSource = 'dark'
     about.loadFile('./src/views/sobre.html')
+
+    // bug 2 (reabrir a janela ao se estiver fechada)
+    about.on('closed', () => {
+        about = null
+    })
 }
 
 // executar de forma assincrona a aplicação
@@ -49,18 +63,18 @@ const template = [
         label: 'Arquivo',
         submenu: [
             {
-            label: 'Sair',
-            click: () => app.quit(),
-            accelerator: 'Alt+F4'
+                label: 'Sair',
+                click: () => app.quit(),
+                accelerator: 'Alt+F4'
             }
-        ] 
+        ]
     },
     {
         label: 'Exibir',
         submenu: [
             {
-            label: 'Recarregar',
-            role: 'reload',
+                label: 'Recarregar',
+                role: 'reload',
             },
             {
                 label: 'Ferramentas do desenvolvedor',
@@ -95,9 +109,26 @@ const template = [
                 type: 'separator'
             },
             {
-            label: 'Sobre',
-            click: () => aboutWindow(),
+                label: 'Sobre',
+                click: () => aboutWindow(),
             }
         ]
     },
 ]
+
+// Processos
+console.log("Processo Principal")
+// Exemplo 1: Comando que só funciona no node.js
+console.log(`Electron: ${process.versions.electron}`)
+console.log(`Node: ${process.versions.node}`)
+
+// Exemplo 2: Recebimento de uma mensagem do renderer
+ipcMain.on(('send-message'), (event, message) => {
+    console.log(`Processo principal recebeu uma mensagem: ${message}`)
+    event.returnValue = 'oi'
+})
+
+// Exemplo 3: Recebimentodo renderer de uma ação a ser executada
+ipcMain.on('open-about', () => {
+    aboutWindow()
+})

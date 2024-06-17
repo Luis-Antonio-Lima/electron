@@ -32,3 +32,24 @@ shell
 
 Obs2: O shell é usado no main para acessar recursos externos
 (links)
+
+5 - Processos (principal e renderização)
+- Só pode existir um processo principal (main.js)
+- Para criar um processo de renderização devemos ligar um documento js na página html
+- Por uma questão didática podemos dizer que o processo de renderização é o front-end da aplicação e o processo principal é o back-end da aplicação
+
+preload.js (seguir a documentação para implementar)
+
+O preload.js é usado para:
+1 - Expor a utilização do node e recursos do electron para o processo de renderização, melhorando o desempenho e a segurança
+2 - Para situações onde você sabe que vai precisar de certos recursos e dados antes que o usuário solicite diretamente, tornando a experiência do usuário mais rápida e suave
+
+obs: É possivel tirar o contexto de isolamento e permitir a execução do node.js no processo de renderização.
+
+IPC (inter-process comunication)
+ipcMain (processo principal)
+ipcRenderer (processo de renderização)
+
+sintaxe ipcMain e ipcRenderer (recebimento)
+ipcMain.on(() => {})
+ipcRenderer.on(() => {})
