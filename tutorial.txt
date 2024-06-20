@@ -53,3 +53,15 @@ ipcRenderer (processo de renderização)
 sintaxe ipcMain e ipcRenderer (recebimento)
 ipcMain.on(() => {})
 ipcRenderer.on(() => {})
+
+Uso de frameworks (front-end) no electron
+- boostrap
+     |____ local (download)
+
+Passo 1: Fazer download do css e js compilado
+PAsso 2: Descompactar
+
+Para usar o bootstrap seguir a documentação
+Dica:
+O bootstrap trabalha com conceitos de classes
+Inicie 

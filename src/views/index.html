@@ -8,12 +8,24 @@
 
     <!--O electron usa o título na janela-->
     <title>Tutorial Electron</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
 <body>
-    <p id="dataAtual"></p>
-    <h1>Hello Electron</h1>
-    <button onclick="sobre()">Sobre</button>
-    <!-- Processo de renderização -->
+    <div class="container">
+        <h1>Hello Electron</h1>
+        <button onclick="sobre()" class="btn btn-outline-dark">Sobre</button>
+    </div>
+
+    <footer>
+        <p id="dataAtual"></p>
+    </footer>
+
+    <!-- bootstrap -->
+    <script src="../public/js/bootstrap.min.js"></script>
+
+    <!-- Processo de renderização (sempre no fim) -->
+    <script src="./renderer.js"></script>
 </body>
-<script src="./renderer.js"></script>
 </html>
