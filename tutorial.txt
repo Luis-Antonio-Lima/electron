@@ -64,4 +64,12 @@ PAsso 2: Descompactar
 Para usar o bootstrap seguir a documentação
 Dica:
 O bootstrap trabalha com conceitos de classes
-Inicie 
+Inicie criando um container (div.container)
+
+
+Relação entre janelas (parent-child) e modal
+- Foco do usuário no sistema
+- Segurança e desempenho
+
+Passo 1: Determinar a janela pai (principal)
+Passo 2: Criar o relacionamento entre as janelas
