@@ -149,6 +149,8 @@ console.log(`Node: ${process.versions.node}`)
 ipcMain.on(('send-message'), (event, message) => {
     console.log(`Processo principal recebeu uma mensagem: ${message}`)
     event.returnValue = 'oi'
+    // Enviar uma resposta ao renderizador
+    event.reply('receive-message', "Olá renderizador!")
 })
 
 // Exemplo 3: Recebimentodo renderer de uma ação a ser executada
