@@ -18,3 +18,15 @@ api.answer((event, message) => {
 function sobre() {
     api.openAbout()
 }
+
+function info() {
+    api.info()
+}
+
+function warning() {
+    api.warning()
+}
+
+function select() {
+    api.select()
+}

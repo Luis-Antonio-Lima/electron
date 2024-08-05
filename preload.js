@@ -6,7 +6,10 @@ contextBridge.exposeInMainWorld('api', {
   electron: () => process.versions.electron,
   hello: () => ipcRenderer.send('send-message', "Oi"),
   answer: (message) => ipcRenderer.on('receive-message', message),
-  openAbout: () => ipcRenderer.send('open-about')
+  openAbout: () => ipcRenderer.send('open-about'),
+  info: () => ipcRenderer.send('dialog-info'),
+  warning: () => ipcRenderer.send('dialog-warning'),
+  select: () => ipcRenderer.send('dialog-select')
 })
 
 // Inserir data na página
